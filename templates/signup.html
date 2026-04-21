@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="form-section auth-page">
+    <div class="form-container">
+        <div class="auth-shell w3-card-4">
+
+            <!-- LEFT SIDE -->
+            <div class="auth-left">
+                <span class="auth-kicker">Account Registration</span>
+
+                <h1 data-i18n="signup_title">Create Your Account</h1>
+
+                <p class="auth-text" data-i18n="signup_text">
+                    Join the national healthcare data platform.
+                </p>
+
+                <div class="auth-feature-list">
+                    <div class="auth-feature-item">
+                        Secure user registration
+                    </div>
+                    <div class="auth-feature-item">
+                        Access national healthcare data
+                    </div>
+                    <div class="auth-feature-item">
+                        AI-powered insights & dashboards
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="auth-right">
+                <div class="auth-form-head">
+                    <h2>Sign Up</h2>
+                    <p>Create a new account to get started</p>
+                </div>
+
+                <form method="POST" class="auth-form w3-container">
+
+                    <div class="auth-form-group">
+                        <label class="auth-label" data-i18n="label_fullname">Full Name</label>
+                        <input 
+                            type="text" 
+                            name="fullname" 
+                            class="w3-input w3-border auth-input"
+                            required
+                        >
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label class="auth-label" data-i18n="label_email">Email Address</label>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            class="w3-input w3-border auth-input"
+                            required
+                        >
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label class="auth-label" data-i18n="label_password">Password</label>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            class="w3-input w3-border auth-input"
+                            required
+                        >
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        class="primary-btn auth-submit-btn"
+                        data-i18n="btn_signup">
+                        Sign Up
+                    </button>
+                </form>
+
+                <p class="auth-switch-text">
+                    <span data-i18n="have_account">Already have an account?</span>
+                    <a href="{{ url_for('auth.login') }}" class="auth-switch-link" data-i18n="btn_login">
+                        Login
+                    </a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

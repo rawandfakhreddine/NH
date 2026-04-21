@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="portal-section">
+    <div class="container">
+
+        <h1>National Healthcare Portal Services</h1>
+        <p>Real-time intelligence powered by your data</p>
+
+        <div class="portal-grid">
+
+            <!-- Notices -->
+            <div class="portal-card">
+                <h2>Notices</h2>
+                <ul>
+                    {% for item in notices %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Standards -->
+            <div class="portal-card">
+                <h2>Standards</h2>
+                <ul>
+                    {% for item in standards %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Data Dictionary -->
+            <div class="portal-card">
+                <h2>Data Dictionary</h2>
+                <ul>
+                    {% for item in dictionary %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Reporting -->
+            <div class="portal-card">
+                <h2>Reporting</h2>
+                <ul>
+                    {% for item in reporting %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

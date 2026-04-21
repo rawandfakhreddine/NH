@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="form-section premium-form-page">
+    <div class="form-container">
+
+        <div class="premium-form-hero">
+            <div class="premium-form-hero-content">
+                <span class="premium-form-kicker">Claims Management</span>
+                <h1 data-i18n="add_claim_title">Add Claim</h1>
+                <p>
+                    Create a new healthcare financial claim with encounter details,
+                    diagnosis information, billing values, and workflow status for
+                    operational review and reporting.
+                </p>
+            </div>
+
+            <div class="premium-form-hero-badge">
+                <strong>Claims Entry</strong>
+                <span>Structured submission workflow</span>
+            </div>
+        </div>
+
+        <div class="form-card premium-form-card">
+            <div class="premium-form-head">
+                <div>
+                    <span class="section-mini-label">New Transaction</span>
+                    <h2>Claim Information</h2>
+                </div>
+            </div>
+
+            <form method="POST" class="beneficiary-form premium-form-layout">
+                <div class="form-grid premium-form-grid">
+                    <div class="form-field">
+                        <label data-i18n="th_claim_number">Claim Number</label>
+                        <input type="text" name="claim_number" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_beneficiary_nid">Beneficiary National ID</label>
+                        <input type="text" name="beneficiary_national_id" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_encounter_date">Encounter Date</label>
+                        <input type="date" name="encounter_date" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_diagnosis_code">Diagnosis Code</label>
+                        <input type="text" name="diagnosis_code" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_total_gross">Total Gross</label>
+                        <input type="number" step="0.01" name="total_gross" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_patient_share">Patient Share</label>
+                        <input type="number" step="0.01" name="patient_share" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_net_amount">Net Amount</label>
+                        <input type="number" step="0.01" name="net_amount" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_status">Status</label>
+                        <select name="status" required>
+                            <option value="Submitted" data-i18n="status_submitted">Submitted</option>
+                            <option value="Approved" data-i18n="status_approved">Approved</option>
+                            <option value="Denied" data-i18n="status_denied">Denied</option>
+                            <option value="Pending" data-i18n="status_pending">Pending</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="premium-form-actions">
+                    <button type="submit" class="primary-btn form-submit-btn" data-i18n="save_claim">
+                        Save Claim
+                    </button>
+                    <a href="{{ url_for('main.claims') }}" class="secondary-btn">
+                        Back to Claims
+                    </a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

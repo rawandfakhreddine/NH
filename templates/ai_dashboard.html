@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="ai-dashboard-page">
+    <div class="ai-dashboard-shell">
+
+        <section class="ai-dashboard-top">
+            <div class="ai-dashboard-hero-card">
+                <span class="ai-dashboard-kicker">AI INSIGHTS CENTER</span>
+                <h1>National Healthcare AI Intelligence Dashboard</h1>
+                <p>
+                    Monitor fraud exposure, risk distribution, suspicious financial activity,
+                    and AI-based healthcare claim screening from one unified analytics environment.
+                </p>
+
+                <div class="ai-dashboard-top-stats">
+                    <div class="ai-top-stat-box">
+                        <strong>{{ total }}</strong>
+                        <span>Total Claims</span>
+                    </div>
+                    <div class="ai-top-stat-box">
+                        <strong>{{ high }}</strong>
+                        <span>High Risk</span>
+                    </div>
+                    <div class="ai-top-stat-box">
+                        <strong>{{ medium }}</strong>
+                        <span>Medium Risk</span>
+                    </div>
+                    <div class="ai-top-stat-box">
+                        <strong>{{ low }}</strong>
+                        <span>Low Risk</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-dashboard-status-card">
+                <span class="ai-dashboard-kicker">System Status</span>
+
+                {% if total == 0 %}
+                    <h2>No Data Yet</h2>
+                    <p>No claims are available for AI screening yet.</p>
+                    <div class="ai-status-badge low-pill">Waiting for Records</div>
+                    <div class="status-chart-label">No Data</div>
+                {% elif high >= medium and high >= low %}
+                    <h2>High Alert</h2>
+                    <p>Immediate review of risky claims is recommended.</p>
+                    <div class="ai-status-badge high-pill">Priority Review</div>
+                    <div class="status-chart-label">High Risk Dominant</div>
+                {% elif medium >= low %}
+                    <h2>Monitor Closely</h2>
+                    <p>Moderate fraud trend detected across submitted claims.</p>
+                    <div class="ai-status-badge medium-pill">Watchlist</div>
+                    <div class="status-chart-label">Medium Risk Trend</div>
+                {% else %}
+                    <h2>Stable</h2>
+                    <p>Most claims currently appear low risk.</p>
+                    <div class="ai-status-badge low-pill">Healthy Pattern</div>
+                    <div class="status-chart-label">Low Risk Dominant</div>
+                {% endif %}
+
+                <div class="ai-status-chart-wrap">
+                    <canvas id="statusMiniChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="ai-kpi-grid insane-kpi-grid">
+            <div class="ai-kpi-card neutral-card">
+                <h3>Total Claims</h3>
+                <p>{{ total }}</p>
+                <span>All records included in AI screening</span>
+            </div>
+
+            <div class="ai-kpi-card high-card">
+                <h3>High Risk</h3>
+                <p>{{ high }}</p>
+                <span>{{ high_percent }}% of all claims</span>
+            </div>
+
+            <div class="ai-kpi-card medium-card">
+                <h3>Medium Risk</h3>
+                <p>{{ medium }}</p>
+                <span>{{ medium_percent }}% of all claims</span>
+            </div>
+
+            <div class="ai-kpi-card low-card">
+                <h3>Low Risk</h3>
+                <p>{{ low }}</p>
+                <span>{{ low_percent }}% of all claims</span>
+            </div>
+        </section>
+
+        <section class="ai-dashboard-grid insane-dashboard-grid">
+            <div class="ai-panel">
+                <div class="ai-panel-header">
+                    <h2>Risk Distribution Chart</h2>
+                    <span>Bar chart</span>
+                </div>
+                <div class="chart-card">
+                    <canvas id="riskBarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="ai-panel">
+                <div class="ai-panel-header">
+                    <h2>Risk Composition</h2>
+                    <span>Doughnut chart</span>
+                </div>
+                <div class="chart-card doughnut-card">
+                    <canvas id="riskDoughnutChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="ai-dashboard-grid">
+            <div class="ai-panel">
+                <div class="ai-panel-header">
+                    <h2>Risk Distribution</h2>
+                    <span>Live screening overview</span>
+                </div>
+
+                <div class="risk-bar-group">
+                    <div class="risk-bar-row">
+                        <div class="risk-bar-label">
+                            <span class="dot high-dot"></span>
+                            High Risk
+                        </div>
+                        <div class="risk-bar-track">
+                            <div class="risk-bar-fill high-fill" style="width: {{ high_percent }}%;"></div>
+                        </div>
+                        <div class="risk-bar-value">{{ high_percent }}%</div>
+                    </div>
+
+                    <div class="risk-bar-row">
+                        <div class="risk-bar-label">
+                            <span class="dot medium-dot"></span>
+                            Medium Risk
+                        </div>
+                        <div class="risk-bar-track">
+                            <div class="risk-bar-fill medium-fill" style="width: {{ medium_percent }}%;"></div>
+                        </div>
+                        <div class="risk-bar-value">{{ medium_percent }}%</div>
+                    </div>
+
+                    <div class="risk-bar-row">
+                        <div class="risk-bar-label">
+                            <span class="dot low-dot"></span>
+                            Low Risk
+                        </div>
+                        <div class="risk-bar-track">
+                            <div class="risk-bar-fill low-fill" style="width: {{ low_percent }}%;"></div>
+                        </div>
+                        <div class="risk-bar-value">{{ low_percent }}%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-panel">
+                <div class="ai-panel-header">
+                    <h2>AI Recommendation</h2>
+                    <span>Decision summary</span>
+                </div>
+
+                <div class="ai-summary-box ai-summary-box-premium">
+                    {% if total == 0 %}
+                        <p><strong>Priority:</strong> No data available yet.</p>
+                        <p>Add claims first to activate AI fraud screening and operational analysis.</p>
+                    {% elif high >= medium and high >= low %}
+                        <p><strong>Priority:</strong> High-risk claims dominate the current dataset.</p>
+                        <p>Review denied claims, unusually large gross amounts, and suspicious diagnosis patterns first.</p>
+                    {% elif medium >= low %}
+                        <p><strong>Priority:</strong> Moderate risk trend detected.</p>
+                        <p>Monitor pending claims and mid-range financial activity closely.</p>
+                    {% else %}
+                        <p><strong>Priority:</strong> Environment appears stable.</p>
+                        <p>Continue active screening and monitor incoming claims for anomalies.</p>
+                    {% endif %}
+                </div>
+
+                <div class="ai-insight-mini-grid">
+                    <div class="ai-insight-mini-card">
+                        <h4>Screening Logic</h4>
+                        <p>High amount, denied claims, and unusual diagnosis codes increase AI risk.</p>
+                    </div>
+                    <div class="ai-insight-mini-card">
+                        <h4>Operational Signal</h4>
+                        <p>The platform continuously evaluates claims for fraud awareness and review readiness.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="signal-grid">
+            <div class="signal-card">
+                <h3>Detection Layer</h3>
+                <p>AI classification is actively identifying unusual healthcare financial patterns.</p>
+            </div>
+
+            <div class="signal-card">
+                <h3>Workflow Readiness</h3>
+                <p>Claims can be prioritized based on AI risk categories for faster review.</p>
+            </div>
+
+            <div class="signal-card">
+                <h3>Monitoring Status</h3>
+                <p>Real operational records are being analyzed in a structured intelligence environment.</p>
+            </div>
+        </section>
+
+        <section class="ai-panel ai-table-panel">
+            <div class="ai-panel-header">
+                <h2>Recent Claim Risk Review</h2>
+                <span>Latest screened claims</span>
+            </div>
+
+            {% if recent_risks %}
+                <div class="ai-table-wrap">
+                    <table class="ai-table">
+                        <thead>
+                            <tr>
+                                <th>Claim Number</th>
+                                <th>Beneficiary ID</th>
+                                <th>Diagnosis</th>
+                                <th>Total Gross</th>
+                                <th>Status</th>
+                                <th>AI Risk</th>
+                                <th>AI Explanation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in recent_risks %}
+                            <tr>
+                                <td>{{ item["claim_number"] }}</td>
+                                <td>{{ item["beneficiary_national_id"] }}</td>
+                                <td>{{ item["diagnosis_code"] }}</td>
+                                <td>{{ item["total_gross"] }}</td>
+                                <td>{{ item["status"] }}</td>
+                                <td>
+                                    <span class="ai-risk-pill {% if item['risk'] == 'High' %}risk-pill-high{% elif item['risk'] == 'Medium' %}risk-pill-medium{% else %}risk-pill-low{% endif %}">
+                                        {{ item["risk"] }}
+                                    </span>
+                                </td>
+                                <td>{{ item["explanation"] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="ai-empty-text">No claims available for AI review yet.</p>
+            {% endif %}
+        </section>
+
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const highRisk = Number({{ high|tojson }});
+    const mediumRisk = Number({{ medium|tojson }});
+    const lowRisk = Number({{ low|tojson }});
+
+    const commonColors = ["#d92d20", "#dc6803", "#16a34a"];
+
+    const barCanvas = document.getElementById("riskBarChart");
+    if (barCanvas) {
+        new Chart(barCanvas, {
+            type: "bar",
+            data: {
+                labels: ["High Risk", "Medium Risk", "Low Risk"],
+                datasets: [{
+                    label: "Claims",
+                    data: [highRisk, mediumRisk, lowRisk],
+                    backgroundColor: commonColors,
+                    borderRadius: 12
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { precision: 0 },
+                        grid: { color: "#eef3f6" }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+
+    const doughnutCanvas = document.getElementById("riskDoughnutChart");
+    if (doughnutCanvas) {
+        new Chart(doughnutCanvas, {
+            type: "doughnut",
+            data: {
+                labels: ["High Risk", "Medium Risk", "Low Risk"],
+                datasets: [{
+                    data: [highRisk, mediumRisk, lowRisk],
+                    backgroundColor: commonColors,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "68%",
+                plugins: {
+                    legend: { position: "bottom" }
+                }
+            }
+        });
+    }
+
+    const statusCanvas = document.getElementById("statusMiniChart");
+    if (statusCanvas) {
+        new Chart(statusCanvas, {
+            type: "doughnut",
+            data: {
+                labels: ["High Risk", "Medium Risk", "Low Risk"],
+                datasets: [{
+                    data: [highRisk, mediumRisk, lowRisk],
+                    backgroundColor: commonColors,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "70%",
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="form-section">
+    <div class="form-container">
+        <div class="form-card">
+
+            <h1>AI Fraud Detection</h1>
+            <p class="section-text">
+                Enter claim values below to predict fraud risk using the integrated AI model.
+            </p>
+
+            <!-- FORM -->
+            <form method="POST" class="beneficiary-form">
+                <div class="form-grid">
+
+                    <div>
+                        <label>Total Gross</label>
+                        <input type="number" step="0.01" name="total_gross" required>
+                    </div>
+
+                    <div>
+                        <label>Patient Share</label>
+                        <input type="number" step="0.01" name="patient_share" required>
+                    </div>
+
+                    <div>
+                        <label>Net Amount</label>
+                        <input type="number" step="0.01" name="net_amount" required>
+                    </div>
+
+                    <div>
+                        <label>Status</label>
+                        <select name="status" required>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Denied">Denied</option>
+                            <option value="Approved">Approved</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="primary-btn form-submit-btn">
+                    Predict Risk
+                </button>
+            </form>
+
+            <!-- AI INFO -->
+            <div class="ai-info-box">
+                <h3>How AI Works</h3>
+                <p>
+                    The NHDC AI engine analyzes claim financial values, patient share, net amount, 
+                    and claim status to detect abnormal patterns and predict fraud risk levels.
+                </p>
+            </div>
+
+            <!-- RESULT -->
+            {% if prediction %}
+            <div class="ai-result-card">
+
+                <h2>AI Risk Assessment</h2>
+
+                <div class="risk-badge
+                    {% if prediction == 'Low' %}risk-low
+                    {% elif prediction == 'Medium' %}risk-medium
+                    {% elif prediction == 'High' %}risk-high
+                    {% endif %}
+                ">
+                    {{ prediction }} Risk
+                </div>
+
+                <p class="ai-result-text">
+                    This result is generated using the trained NHDC machine learning model 
+                    based on financial claim behavior and validation patterns.
+                </p>
+
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+{% endblock %}

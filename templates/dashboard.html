@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard-page">
+    <div class="dashboard-shell">
+
+        <section class="dashboard-topbar">
+            <div class="dashboard-topbar-left">
+                <span class="dashboard-kicker" data-i18n="dashboard_kicker">National Operations Center</span>
+                <h1 class="dashboard-main-title" data-i18n="dashboard_title_main">
+                    Healthcare Data Intelligence Dashboard
+                </h1>
+                <p class="dashboard-main-text" data-i18n="dashboard_text_main">
+                    Monitor national healthcare operations, claims visibility, beneficiary records, reporting readiness, and platform performance from one unified control center.
+                </p>
+
+                <div class="dashboard-hero-mini-stats">
+                    <div class="dashboard-hero-mini-card">
+                        <strong>{{ total_beneficiaries }}</strong>
+                        <span data-i18n="dashboard_total_beneficiaries">Total Beneficiaries</span>
+                    </div>
+                    <div class="dashboard-hero-mini-card">
+                        <strong>{{ total_claims }}</strong>
+                        <span data-i18n="dashboard_total_claims">Total Claims</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-profile-card">
+                <div class="dashboard-profile-avatar">
+                    {{ user.fullname[:1] }}
+                </div>
+                <div class="dashboard-profile-info">
+                    <h3>{{ user.fullname }}</h3>
+                    <p>{{ user.email }}</p>
+                    <span>{{ user.role }}</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-summary-grid">
+            <div class="summary-card summary-card-primary">
+                <div class="summary-card-head">
+                    <span class="summary-card-label" data-i18n="dashboard_total_beneficiaries">Total Beneficiaries</span>
+                    <span class="summary-card-icon">01</span>
+                </div>
+                <h2 class="summary-card-number">{{ total_beneficiaries }}</h2>
+                <p class="summary-card-text" data-i18n="dashboard_beneficiaries_text">
+                    Registered covered individuals available across the national data exchange environment.
+                </p>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-card-head">
+                    <span class="summary-card-label" data-i18n="dashboard_total_claims">Total Claims</span>
+                    <span class="summary-card-icon">02</span>
+                </div>
+                <h2 class="summary-card-number">{{ total_claims }}</h2>
+                <p class="summary-card-text" data-i18n="dashboard_claims_text">
+                    Submitted healthcare financial transactions monitored for review, validation, and reporting.
+                </p>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-card-head">
+                    <span class="summary-card-label" data-i18n="dashboard_reporting_card">Reporting Readiness</span>
+                    <span class="summary-card-icon">03</span>
+                </div>
+                <h2 class="summary-card-number" data-i18n="dashboard_reporting_value">Ready</h2>
+                <p class="summary-card-text" data-i18n="dashboard_reporting_text">
+                    Structured records prepared for visibility, compliance review, and operational extraction.
+                </p>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-card-head">
+                    <span class="summary-card-label" data-i18n="dashboard_ai_card">AI Monitoring</span>
+                    <span class="summary-card-icon">04</span>
+                </div>
+                <h2 class="summary-card-number" data-i18n="dashboard_ai_value">Active</h2>
+                <p class="summary-card-text" data-i18n="dashboard_ai_text">
+                    Future-ready fraud detection, anomaly scoring, and healthcare intelligence integration layer.
+                </p>
+            </div>
+        </section>
+
+        <section class="dashboard-actions-panel">
+            <div class="dashboard-section-heading">
+                <div>
+                    <span class="section-mini-label" data-i18n="dashboard_quick_actions_label">Quick Actions</span>
+                    <h2 data-i18n="dashboard_quick_actions_title">Operational shortcuts</h2>
+                </div>
+            </div>
+
+            <div class="quick-actions-grid">
+                <a href="{{ url_for('main.add_beneficiary') }}" class="quick-action-card">
+                    <div class="quick-action-icon">+</div>
+                    <div>
+                        <h3 data-i18n="dashboard_action_add_beneficiary">Add Beneficiary</h3>
+                        <p data-i18n="dashboard_action_add_beneficiary_text">Create a new beneficiary master record.</p>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('main.add_claim') }}" class="quick-action-card">
+                    <div class="quick-action-icon">+</div>
+                    <div>
+                        <h3 data-i18n="dashboard_action_add_claim">Add Claim</h3>
+                        <p data-i18n="dashboard_action_add_claim_text">Submit a new healthcare financial claim.</p>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('main.beneficiaries') }}" class="quick-action-card">
+                    <div class="quick-action-icon">→</div>
+                    <div>
+                        <h3 data-i18n="dashboard_action_view_beneficiaries">View Beneficiaries</h3>
+                        <p data-i18n="dashboard_action_view_beneficiaries_text">Browse all registered beneficiary records.</p>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('main.claims') }}" class="quick-action-card">
+                    <div class="quick-action-icon">→</div>
+                    <div>
+                        <h3 data-i18n="dashboard_action_view_claims">View Claims</h3>
+                        <p data-i18n="dashboard_action_view_claims_text">Review submitted claims and status history.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="dashboard-content-grid">
+            <div class="dashboard-panel wide-panel">
+                <div class="dashboard-section-heading">
+                    <div>
+                        <span class="section-mini-label" data-i18n="dashboard_recent_claims_label">Latest Transactions</span>
+                        <h2 data-i18n="dashboard_recent_claims">Recent Claims</h2>
+                    </div>
+                    <a href="{{ url_for('main.claims') }}" class="table-action-link" data-i18n="dashboard_view_all">View All</a>
+                </div>
+
+                <div class="dashboard-table-wrap">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="th_claim_number">Claim Number</th>
+                                <th data-i18n="th_beneficiary_nid">Beneficiary National ID</th>
+                                <th data-i18n="th_diagnosis_code">Diagnosis Code</th>
+                                <th data-i18n="th_status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for claim in recent_claims %}
+                            <tr>
+                                <td>{{ claim.claim_number }}</td>
+                                <td>{{ claim.beneficiary_national_id }}</td>
+                                <td>{{ claim.diagnosis_code }}</td>
+                                <td>
+                                    <span class="status-pill {% if claim.status == 'Approved' %}status-approved{% elif claim.status == 'Denied' %}status-denied{% elif claim.status == 'Pending' %}status-pending{% else %}status-submitted{% endif %}">
+                                        {{ claim.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% if not recent_claims %}
+                    <p class="dashboard-empty" data-i18n="dashboard_no_claims">No claims yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="dashboard-panel side-panel">
+                <div class="dashboard-section-heading">
+                    <div>
+                        <span class="section-mini-label" data-i18n="dashboard_health_label">System Health</span>
+                        <h2 data-i18n="dashboard_health_title">Platform Overview</h2>
+                    </div>
+                </div>
+
+                <div class="health-list">
+                    <div class="health-item">
+                        <div>
+                            <h3 data-i18n="dashboard_health_1_title">Data Exchange</h3>
+                            <p data-i18n="dashboard_health_1_text">Secure and structured transaction flow.</p>
+                        </div>
+                        <span class="health-badge" data-i18n="dashboard_health_ok">Stable</span>
+                    </div>
+
+                    <div class="health-item">
+                        <div>
+                            <h3 data-i18n="dashboard_health_2_title">Validation Layer</h3>
+                            <p data-i18n="dashboard_health_2_text">Rule enforcement and compliance checks.</p>
+                        </div>
+                        <span class="health-badge" data-i18n="dashboard_health_ok">Stable</span>
+                    </div>
+
+                    <div class="health-item">
+                        <div>
+                            <h3 data-i18n="dashboard_health_3_title">Reporting Readiness</h3>
+                            <p data-i18n="dashboard_health_3_text">Operational records prepared for extraction.</p>
+                        </div>
+                        <span class="health-badge" data-i18n="dashboard_health_ready">Ready</span>
+                    </div>
+
+                    <div class="health-item">
+                        <div>
+                            <h3 data-i18n="dashboard_health_4_title">AI Layer</h3>
+                            <p data-i18n="dashboard_health_4_text">Fraud and analytics pipeline available.</p>
+                        </div>
+                        <span class="health-badge" data-i18n="dashboard_health_active">Active</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</section>
+{% endblock %}

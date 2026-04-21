@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="list-section beneficiaries-page">
+    <div class="list-container">
+
+        <div class="beneficiaries-hero-card">
+            <div class="beneficiaries-hero-content">
+                <span class="beneficiaries-kicker">Beneficiary Management</span>
+                <h1 data-i18n="beneficiaries_title">Beneficiaries</h1>
+                <p>
+                    Access registered beneficiary records, review core member details,
+                    and manage national healthcare coverage data in one secure workspace.
+                </p>
+            </div>
+
+            <div class="beneficiaries-hero-actions">
+                <a href="{{ url_for('main.add_beneficiary') }}" class="primary-btn" data-i18n="add_new_beneficiary">
+                    Add New Beneficiary
+                </a>
+            </div>
+        </div>
+
+        <div class="beneficiaries-summary-strip">
+            <div class="beneficiaries-summary-card">
+                <span class="beneficiaries-summary-label">Total Records</span>
+                <strong>{{ beneficiaries|length }}</strong>
+            </div>
+
+            <div class="beneficiaries-summary-card">
+                <span class="beneficiaries-summary-label">Registry Status</span>
+                <strong>Active</strong>
+            </div>
+
+            <div class="beneficiaries-summary-card">
+                <span class="beneficiaries-summary-label">Data Access</span>
+                <strong>Secure</strong>
+            </div>
+        </div>
+
+        <div class="table-card premium-table-card">
+            <div class="premium-table-head">
+                <div>
+                    <span class="section-mini-label">Registered Members</span>
+                    <h2>Beneficiary Register</h2>
+                </div>
+                <a href="{{ url_for('main.add_beneficiary') }}" class="table-action-link" data-i18n="add_new_beneficiary">
+                    Add New Beneficiary
+                </a>
+            </div>
+
+            <div class="data-table-wrap">
+                <table class="data-table premium-data-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="th_national_id">National ID</th>
+                            <th data-i18n="th_first_name">First Name</th>
+                            <th data-i18n="th_last_name">Last Name</th>
+                            <th data-i18n="th_dob">Date of Birth</th>
+                            <th data-i18n="th_gender">Gender</th>
+                            <th data-i18n="th_nationality">Nationality</th>
+                            <th data-i18n="th_mobile">Mobile</th>
+                            <th data-i18n="th_email">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for beneficiary in beneficiaries %}
+                        <tr>
+                            <td>{{ beneficiary.national_id }}</td>
+                            <td>{{ beneficiary.first_name }}</td>
+                            <td>{{ beneficiary.last_name }}</td>
+                            <td>{{ beneficiary.date_of_birth }}</td>
+                            <td>{{ beneficiary.gender }}</td>
+                            <td>{{ beneficiary.nationality }}</td>
+                            <td>{{ beneficiary.mobile_number }}</td>
+                            <td>{{ beneficiary.email_address }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% if not beneficiaries %}
+                    <p class="empty-text" data-i18n="no_beneficiaries">No beneficiaries added yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

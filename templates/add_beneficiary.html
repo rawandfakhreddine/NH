@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="form-section premium-form-page">
+    <div class="form-container">
+
+        <div class="premium-form-hero">
+            <div class="premium-form-hero-content">
+                <span class="premium-form-kicker">Beneficiary Management</span>
+                <h1 data-i18n="add_beneficiary_title">Add Beneficiary</h1>
+                <p>
+                    Create a new beneficiary record with identity, demographic, and contact details
+                    to support national healthcare registration and operational workflows.
+                </p>
+            </div>
+
+            <div class="premium-form-hero-badge">
+                <strong>Secure Entry</strong>
+                <span>Validated registration workflow</span>
+            </div>
+        </div>
+
+        <div class="form-card premium-form-card">
+            <div class="premium-form-head">
+                <div>
+                    <span class="section-mini-label">New Record</span>
+                    <h2>Beneficiary Information</h2>
+                </div>
+            </div>
+
+            <form method="POST" class="beneficiary-form premium-form-layout">
+                <div class="form-grid premium-form-grid">
+                    <div class="form-field">
+                        <label data-i18n="th_national_id">National ID</label>
+                        <input type="text" name="national_id" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_first_name">First Name</label>
+                        <input type="text" name="first_name" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_last_name">Last Name</label>
+                        <input type="text" name="last_name" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_dob">Date of Birth</label>
+                        <input type="date" name="date_of_birth" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_gender">Gender</label>
+                        <select name="gender" required>
+                            <option value="" data-i18n="select_option">Select</option>
+                            <option value="Male" data-i18n="male">Male</option>
+                            <option value="Female" data-i18n="female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_nationality">Nationality</label>
+                        <input type="text" name="nationality" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_mobile">Mobile</label>
+                        <input type="text" name="mobile_number">
+                    </div>
+
+                    <div class="form-field">
+                        <label data-i18n="th_email">Email</label>
+                        <input type="email" name="email_address">
+                    </div>
+                </div>
+
+                <div class="premium-form-actions">
+                    <button type="submit" class="primary-btn form-submit-btn" data-i18n="save_beneficiary">
+                        Save Beneficiary
+                    </button>
+                    <a href="{{ url_for('main.beneficiaries') }}" class="secondary-btn">
+                        Back to Beneficiaries
+                    </a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

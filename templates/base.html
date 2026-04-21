@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHDC</title>
+
+    <!-- W3 CSS -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- LOADING SCREEN -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loader-content">
+            <div class="loader-logo-wrap">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="NHDC Logo" class="loader-logo">
+            </div>
+
+            <div class="ecg-loader">
+                <span></span>
+            </div>
+
+            <h1>NHDC</h1>
+            <p>National Healthcare Data Center</p>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="header-container">
+
+            <a href="{{ url_for('main.home') }}" class="brand-link">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="NHDC Logo" class="logo-img">
+                <div class="brand-text-wrap">
+                    <span class="brand-title">NHDC</span>
+                    <span class="brand-subtitle" data-i18n="brand_subtitle">National Healthcare Data Center</span>
+                </div>
+            </a>
+
+            <nav class="main-nav">
+                <a href="{{ url_for('main.home') }}" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="{{ url_for('main.dashboard') }}" class="nav-link" data-i18n="nav_dashboard">Dashboard</a>
+                <a href="{{ url_for('main.beneficiaries') }}" class="nav-link" data-i18n="nav_beneficiaries">Beneficiaries</a>
+                <a href="{{ url_for('main.claims') }}" class="nav-link" data-i18n="nav_claims">Claims</a>
+                <a href="{{ url_for('main.ai_dashboard') }}" class="nav-link">AI Insights</a>
+                <a href="{{ url_for('auth.logout') }}" class="nav-link nav-link-outline" data-i18n="nav_logout">Logout</a>
+            </nav>
+
+            <div class="language-dropdown">
+                <button class="language-btn" id="languageToggle" type="button">
+                    <span data-i18n="language_label">Language</span>
+                    <span class="language-current" id="currentLanguage">English</span>
+                </button>
+
+                <div class="language-menu" id="languageMenu">
+                    <button type="button" class="language-option" data-lang="en">English</button>
+                    <button type="button" class="language-option" data-lang="ar">العربية</button>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="page-content">
+        <div class="flash-wrapper">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {% if category == 'success' %}flash-success{% else %}flash-error{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- CHATBOT BUTTON -->
+    <button class="chatbot-toggle" id="chatbotToggle" type="button" aria-label="Open AI assistant">
+        💬
+    </button>
+
+    <!-- CHATBOT BOX -->
+    <div class="chatbot-container" id="chatbotBox" aria-hidden="true">
+        <div class="chatbot-header">
+            <div>
+                <div class="chatbot-title">AI Assistant</div>
+                <div class="chatbot-subtitle">NHDC smart support</div>
+            </div>
+            <button class="chatbot-close" id="chatbotClose" type="button" aria-label="Close chat">✖</button>
+        </div>
+
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="chatbot-message bot" id="chatbotWelcome">
+                Hello! I am your NHDC AI assistant 👋
+            </div>
+        </div>
+
+        <div class="chatbot-input">
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Ask about claims, beneficiaries, AI..."
+                autocomplete="off"
+            >
+            <button id="chatMicBtn" type="button" aria-label="Voice input">🎤</button>
+            <button id="chatSpeakBtn" type="button" aria-label="Read last answer">🔊</button>
+            <button id="chatSendBtn" type="button">Send</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/lang.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+
+    <script>
+        window.addEventListener("load", function () {
+            const loader = document.getElementById("loadingScreen");
+
+            setTimeout(function () {
+                loader.classList.add("loading-screen-hide");
+
+                setTimeout(function () {
+                    loader.remove();
+                }, 500);
+            }, 1200);
+        });
+    </script>
+</body>
+</html>

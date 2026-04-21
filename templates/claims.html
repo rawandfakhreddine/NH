@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="list-section claims-page">
+    <div class="list-container">
+
+        <div class="claims-hero-card">
+            <div class="claims-hero-content">
+                <span class="claims-kicker">Claims Management</span>
+                <h1 data-i18n="claims_title">Claims</h1>
+                <p>
+                    Review submitted healthcare financial transactions, monitor diagnosis records,
+                    and track operational claim status in one professional workspace.
+                </p>
+            </div>
+
+            <div class="claims-hero-actions">
+                <a href="{{ url_for('main.add_claim') }}" class="primary-btn" data-i18n="add_new_claim">
+                    Add New Claim
+                </a>
+            </div>
+        </div>
+
+        <div class="claims-summary-strip">
+            <div class="claims-summary-card">
+                <span class="claims-summary-label">Total Records</span>
+                <strong>{{ claims|length }}</strong>
+            </div>
+
+            <div class="claims-summary-card">
+                <span class="claims-summary-label">Workflow</span>
+                <strong>Active</strong>
+            </div>
+
+            <div class="claims-summary-card">
+                <span class="claims-summary-label">Review Layer</span>
+                <strong>Enabled</strong>
+            </div>
+        </div>
+
+        <div class="table-card premium-table-card">
+            <div class="premium-table-head">
+                <div>
+                    <span class="section-mini-label">Submitted Transactions</span>
+                    <h2>Claims Register</h2>
+                </div>
+                <a href="{{ url_for('main.add_claim') }}" class="table-action-link" data-i18n="add_new_claim">
+                    Add New Claim
+                </a>
+            </div>
+
+            <div class="data-table-wrap">
+                <table class="data-table premium-data-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="th_claim_number">Claim Number</th>
+                            <th data-i18n="th_beneficiary_nid">Beneficiary National ID</th>
+                            <th data-i18n="th_encounter_date">Encounter Date</th>
+                            <th data-i18n="th_diagnosis_code">Diagnosis Code</th>
+                            <th data-i18n="th_total_gross">Total Gross</th>
+                            <th data-i18n="th_patient_share">Patient Share</th>
+                            <th data-i18n="th_net_amount">Net Amount</th>
+                            <th data-i18n="th_status">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for claim in claims %}
+                        <tr>
+                            <td>{{ claim.claim_number }}</td>
+                            <td>{{ claim.beneficiary_national_id }}</td>
+                            <td>{{ claim.encounter_date }}</td>
+                            <td>{{ claim.diagnosis_code }}</td>
+                            <td>{{ claim.total_gross }}</td>
+                            <td>{{ claim.patient_share }}</td>
+                            <td>{{ claim.net_amount }}</td>
+                            <td>
+                                <span class="status-pill {% if claim.status == 'Approved' %}status-approved{% elif claim.status == 'Denied' %}status-denied{% elif claim.status == 'Pending' %}status-pending{% else %}status-submitted{% endif %}">
+                                    {{ claim.status }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% if not claims %}
+                    <p class="empty-text" data-i18n="no_claims">No claims added yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

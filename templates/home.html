@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="overlay">
+        <div class="hero-content">
+
+            <div class="hero-badge" data-i18n="hero_badge">
+                National Healthcare Intelligence Platform
+            </div>
+
+            <div class="hero-main-card">
+
+                <h1 class="title" data-i18n="hero_title">
+                    National Healthcare Data Center
+                </h1>
+
+                <p class="subtitle" data-i18n="hero_subtitle">
+                    Knowledge Engine of Healthcare
+                </p>
+
+                <p class="hero-text" data-i18n="hero_text">
+                    A centralized platform for healthcare intelligence.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="{{ url_for('auth.login') }}" class="primary-btn" data-i18n="btn_login">Login</a>
+                    <a href="{{ url_for('auth.signup') }}" class="secondary-btn" data-i18n="btn_signup">Sign Up</a>
+                    <a href="#overview" class="ghost-btn" data-i18n="btn_explore">Explore</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="hero-stat-card">
+                        <h3 data-i18n="stat_1_title">24/7</h3>
+                        <p data-i18n="stat_1_text">Data exchange</p>
+                    </div>
+
+                    <div class="hero-stat-card">
+                        <h3 data-i18n="stat_2_title">AI</h3>
+                        <p data-i18n="stat_2_text">Analytics</p>
+                    </div>
+
+                    <div class="hero-stat-card">
+                        <h3 data-i18n="stat_3_title">One Hub</h3>
+                        <p data-i18n="stat_3_text">Connected system</p>
+                    </div>
+
+                    <div class="hero-stat-card">
+                        <h3 data-i18n="stat_4_title">Real-Time</h3>
+                        <p data-i18n="stat_4_text">Fast workflows</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-section" id="overview">
+    <div class="section-container center-text">
+
+        <span class="section-label" data-i18n="overview_label">Overview</span>
+
+        <h2 class="section-title" data-i18n="overview_title">
+            National Healthcare Platform
+        </h2>
+
+        <p class="section-text" data-i18n="overview_text">
+            Centralized healthcare system.
+        </p>
+
+        <div class="overview-grid">
+            <div class="info-card">
+                <div class="info-icon">01</div>
+                <h3 data-i18n="card_1_title">Data Exchange</h3>
+                <p data-i18n="card_1_text">Unified system</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">02</div>
+                <h3 data-i18n="card_2_title">Compliance</h3>
+                <p data-i18n="card_2_text">Validation rules</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">03</div>
+                <h3 data-i18n="card_3_title">AI</h3>
+                <p data-i18n="card_3_text">Smart analytics</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-section portal-section">
+    <div class="section-container">
+
+        <div class="portal-header center-text">
+            <span class="section-label" data-i18n="portal_label">Portal</span>
+
+            <h2 class="section-title" data-i18n="portal_title">
+                Services
+            </h2>
+
+            <p class="section-text" data-i18n="portal_text">
+                Core platform sections
+            </p>
+        </div>
+
+        <div class="portal-grid">
+
+            <div class="portal-card">
+                <h3 data-i18n="notices_title">Notices</h3>
+                <p data-i18n="notices_text">Updates</p>
+                <a href="{{ url_for('main.portal') }}" class="portal-link" data-i18n="portal_link_text">Explore</a>
+            </div>
+
+            <div class="portal-card">
+                <h3 data-i18n="standards_title">Standards</h3>
+                <p data-i18n="standards_text">Rules</p>
+                <a href="{{ url_for('main.portal') }}" class="portal-link" data-i18n="portal_link_text">Explore</a>
+            </div>
+
+            <div class="portal-card">
+                <h3 data-i18n="dictionary_title">Dictionary</h3>
+                <p data-i18n="dictionary_text">Reference</p>
+                <a href="{{ url_for('main.portal') }}" class="portal-link" data-i18n="portal_link_text">Explore</a>
+            </div>
+
+            <div class="portal-card">
+                <h3 data-i18n="reporting_title">Reporting</h3>
+                <p data-i18n="reporting_text">Insights</p>
+                <a href="{{ url_for('main.portal') }}" class="portal-link" data-i18n="portal_link_text">Explore</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="home-section concepts-section">
+    <div class="section-container">
+
+        <div class="portal-header center-text">
+            <span class="section-label" data-i18n="concepts_label">Concepts</span>
+
+            <h2 class="section-title" data-i18n="concepts_title">
+                Core Structure
+            </h2>
+
+            <p class="section-text" data-i18n="concepts_text">
+                Healthcare data structure
+            </p>
+        </div>
+
+        <div class="concept-grid">
+
+            <div class="concept-card">
+                <h3 data-i18n="concept_1_title">Beneficiary</h3>
+                <p data-i18n="concept_1_text">Patient</p>
+            </div>
+
+            <div class="concept-card">
+                <h3 data-i18n="concept_2_title">Provider</h3>
+                <p data-i18n="concept_2_text">Entity</p>
+            </div>
+
+            <div class="concept-card">
+                <h3 data-i18n="concept_3_title">Encounter</h3>
+                <p data-i18n="concept_3_text">Visit</p>
+            </div>
+
+            <div class="concept-card">
+                <h3 data-i18n="concept_4_title">Claim</h3>
+                <p data-i18n="concept_4_text">Finance</p>
+            </div>
+
+            <div class="concept-card">
+                <h3 data-i18n="concept_5_title">Activity</h3>
+                <p data-i18n="concept_5_text">Service</p>
+            </div>
+
+            <div class="concept-card">
+                <h3 data-i18n="concept_6_title">Observation</h3>
+                <p data-i18n="concept_6_text">Data</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="cta-card">
+        <h2 data-i18n="cta_title">
+            Build the future of healthcare
+        </h2>
+
+        <p data-i18n="cta_text">
+            Smart national platform.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="{{ url_for('auth.signup') }}" class="primary-btn" data-i18n="btn_signup">Start</a>
+            <a href="{{ url_for('auth.login') }}" class="secondary-btn" data-i18n="btn_login">Login</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
