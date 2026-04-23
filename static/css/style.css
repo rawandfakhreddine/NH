@@ -4044,3 +4044,531 @@ body.rtl .panel-list li::before {
         height: 180px;
     }
 }
+
+/* CLAIM SEARCH / FILTER / SORT */
+.claims-search-bar {
+    background: #f8fbfd;
+    border: 1px solid #e7edf2;
+    padding: 18px 18px 6px 18px;
+    margin-bottom: 20px;
+}
+
+.claims-search-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: end;
+}
+
+.claims-search-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-900);
+}
+
+.claims-search-field input,
+.claims-search-field select {
+    height: 46px;
+    font-size: 14px;
+    background: #ffffff;
+}
+
+.claims-search-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.claims-search-actions .primary-btn,
+.claims-search-actions .secondary-btn {
+    min-width: 110px;
+    text-align: center;
+}
+
+@media screen and (max-width: 1100px) {
+    .claims-search-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .claims-search-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .claims-search-actions {
+        flex-direction: column;
+    }
+
+    .claims-search-actions .primary-btn,
+    .claims-search-actions .secondary-btn {
+        width: 100%;
+    }
+}
+
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.search-bar input,
+.search-bar select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+}
+body {
+    background: linear-gradient(
+        180deg,
+        #f6f9fc,
+        #eef5f8
+    );
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(34, 179, 170, 0.05), transparent 25%),
+        radial-gradient(circle at top right, rgba(21, 149, 141, 0.04), transparent 22%),
+        linear-gradient(180deg, #f6f9fc, #eef4f8);
+    color: var(--text-dark);
+}
+
+
+/* PREMIUM TOP SECTIONS */
+.dashboard-topbar-left,
+.ai-dashboard-hero-card,
+.claims-hero-card,
+.beneficiaries-hero-card,
+.premium-form-hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-topbar-left::before,
+.ai-dashboard-hero-card::before,
+.claims-hero-card::before,
+.beneficiaries-hero-card::before,
+.premium-form-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(34, 179, 170, 0.16), transparent 20%),
+        radial-gradient(circle at 85% 25%, rgba(255, 255, 255, 0.08), transparent 18%),
+        radial-gradient(circle at 60% 80%, rgba(21, 149, 141, 0.12), transparent 24%);
+    pointer-events: none;
+}
+
+.dashboard-topbar-left > *,
+.ai-dashboard-hero-card > *,
+.claims-hero-card > *,
+.beneficiaries-hero-card > *,
+.premium-form-hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* PREMIUM GLASS / ELEVATION */
+.summary-card,
+.ai-panel,
+.portal-card,
+.info-card,
+.concept-card,
+.table-card,
+.form-card,
+.dashboard-profile-card,
+.claims-summary-card,
+.beneficiaries-summary-card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+}
+
+
+.primary-btn,
+.secondary-btn,
+.ghost-btn,
+.table-action-link {
+    transition: all 0.25s ease;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover,
+.ghost-btn:hover {
+    transform: translateY(-2px);
+}
+
+.quick-action-card:hover,
+.info-card:hover,
+.portal-card:hover,
+.concept-card:hover,
+.summary-card:hover,
+.claims-summary-card:hover,
+.beneficiaries-summary-card:hover {
+    transform: translateY(-4px);
+}
+
+
+.summary-card:nth-child(1) {
+    border-left: 4px solid #16a34a;
+}
+
+.summary-card:nth-child(2) {
+    border-left: 4px solid #2563eb;
+}
+
+.summary-card:nth-child(3) {
+    border-left: 4px solid #dc6803;
+}
+
+.summary-card:nth-child(4) {
+    border-left: 4px solid #7c3aed;
+}
+
+
+.summary-card-number {
+    color: var(--teal-700);
+}
+
+.summary-card:nth-child(2) .summary-card-number {
+    color: #2563eb;
+}
+
+.summary-card:nth-child(3) .summary-card-number {
+    color: #dc6803;
+}
+
+.summary-card:nth-child(4) .summary-card-number {
+    color: #7c3aed;
+}
+
+
+.claims-search-bar {
+    background: #f8fbfd;
+    border: 1px solid #e7edf2;
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.claims-search-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: end;
+}
+
+.claims-search-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-900);
+}
+
+.claims-search-field input,
+.claims-search-field select {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #d9e4ea;
+    border-radius: 14px;
+    font-size: 14px;
+    background: #ffffff;
+    outline: none;
+}
+
+.claims-search-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.claims-search-actions .primary-btn,
+.claims-search-actions .secondary-btn {
+    min-width: 110px;
+    text-align: center;
+}
+
+@media screen and (max-width: 1100px) {
+    .claims-search-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .claims-search-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .claims-search-actions {
+        flex-direction: column;
+    }
+
+    .claims-search-actions .primary-btn,
+    .claims-search-actions .secondary-btn {
+        width: 100%;
+    }
+}
+
+.pagination-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.pagination-info {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-soft);
+}
+
+
+.claims-search-bar {
+    background: #f8fbfd;
+    border: 1px solid #e7edf2;
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.claims-search-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: end;
+}
+
+.claims-search-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-900);
+}
+
+.claims-search-field input,
+.claims-search-field select {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #d9e4ea;
+    border-radius: 14px;
+    font-size: 14px;
+    background: #ffffff;
+    outline: none;
+}
+
+.claims-search-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.claims-search-actions .primary-btn,
+.claims-search-actions .secondary-btn {
+    min-width: 110px;
+    text-align: center;
+}
+
+.pagination-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.pagination-info {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-soft);
+}
+
+@media screen and (max-width: 1100px) {
+    .claims-search-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .claims-search-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .claims-search-actions {
+        flex-direction: column;
+    }
+
+    .claims-search-actions .primary-btn,
+    .claims-search-actions .secondary-btn {
+        width: 100%;
+    }
+}
+
+/* FULL AI CHAT PAGE */
+.ai-chat-page {
+    padding: 40px 20px 80px 20px;
+    min-height: calc(100vh - 78px);
+    background: linear-gradient(180deg, #f7fafc, #eef5f8);
+}
+
+.ai-chat-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.ai-chat-hero {
+    background: linear-gradient(135deg, var(--navy-900), #12384d);
+    border-radius: 30px;
+    padding: 30px 28px;
+    color: #ffffff;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow-soft);
+}
+
+.ai-chat-kicker {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #9be7de;
+}
+
+.ai-chat-hero h1 {
+    margin: 0 0 12px 0;
+    font-size: 40px;
+    line-height: 1.1;
+    color: #ffffff;
+}
+
+.ai-chat-hero p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #d9e8f2;
+    max-width: 760px;
+}
+
+.ai-chat-main-card {
+    background: #ffffff;
+    border: 1px solid #e7edf2;
+    border-radius: 28px;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+
+.ai-chat-header-bar {
+    padding: 24px 24px 12px 24px;
+    border-bottom: 1px solid #eef2f5;
+}
+
+.ai-chat-header-bar h2 {
+    margin: 0;
+    font-size: 28px;
+    color: var(--navy-900);
+}
+
+.ai-chat-header-bar span {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--text-soft);
+}
+
+.ai-chat-messages {
+    height: 480px;
+    overflow-y: auto;
+    padding: 24px;
+    background: linear-gradient(180deg, #fcfeff, #f7fbfd);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ai-chat-input-bar {
+    display: flex;
+    gap: 10px;
+    padding: 18px 20px 20px 20px;
+    border-top: 1px solid #eef2f5;
+    background: #ffffff;
+}
+
+.ai-chat-input-bar input {
+    flex: 1;
+    height: 50px;
+    border: 1px solid #d9e4ea;
+    border-radius: 14px;
+    padding: 0 16px;
+    font-size: 14px;
+    outline: none;
+}
+
+.ai-chat-input-bar input:focus {
+    border-color: var(--teal-600);
+    box-shadow: 0 0 0 4px rgba(21, 149, 141, 0.10);
+}
+
+.ai-chat-input-bar button {
+    height: 50px;
+    min-width: 50px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+#fullChatMicBtn,
+#fullChatSpeakBtn {
+    background: #eef5f8;
+    font-size: 18px;
+}
+
+#fullChatSendBtn {
+    min-width: 120px;
+}
+
+@media screen and (max-width: 768px) {
+    .ai-chat-hero {
+        padding: 24px 18px;
+        border-radius: 22px;
+    }
+
+    .ai-chat-hero h1 {
+        font-size: 30px;
+    }
+
+    .ai-chat-messages {
+        height: 380px;
+        padding: 16px;
+    }
+
+    .ai-chat-input-bar {
+        flex-wrap: wrap;
+    }
+
+    .ai-chat-input-bar input {
+        width: 100%;
+    }
+
+    #fullChatSendBtn {
+        width: 100%;
+    }
+}

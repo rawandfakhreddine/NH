@@ -7,23 +7,60 @@
         <div class="beneficiaries-hero-card">
             <div class="beneficiaries-hero-content">
                 <span class="beneficiaries-kicker">Beneficiary Management</span>
-                <h1 data-i18n="beneficiaries_title">Beneficiaries</h1>
+                <h1>Beneficiaries</h1>
                 <p>
-                    Access registered beneficiary records, review core member details,
-                    and manage national healthcare coverage data in one secure workspace.
+                    Access registered beneficiary records and manage national healthcare data.
                 </p>
             </div>
 
             <div class="beneficiaries-hero-actions">
-                <a href="{{ url_for('main.add_beneficiary') }}" class="primary-btn" data-i18n="add_new_beneficiary">
+                <a href="{{ url_for('main.add_beneficiary') }}" class="primary-btn">
                     Add New Beneficiary
                 </a>
             </div>
         </div>
 
+        <form method="GET" action="{{ url_for('main.beneficiaries') }}" class="claims-search-bar">
+            <div class="claims-search-grid">
+                <div class="claims-search-field">
+                    <label>Keyword Search</label>
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Search by name, ID, nationality, or email"
+                        value="{{ q }}"
+                    >
+                </div>
+
+                <div class="claims-search-field">
+                    <label>Gender Filter</label>
+                    <select name="gender">
+                        <option value="">All Genders</option>
+                        <option value="Male" {% if gender == 'Male' %}selected{% endif %}>Male</option>
+                        <option value="Female" {% if gender == 'Female' %}selected{% endif %}>Female</option>
+                    </select>
+                </div>
+
+                <div class="claims-search-field">
+                    <label>Sort By</label>
+                    <select name="sort">
+                        <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Newest</option>
+                        <option value="oldest" {% if sort == 'oldest' %}selected{% endif %}>Oldest</option>
+                        <option value="first_name" {% if sort == 'first_name' %}selected{% endif %}>First Name</option>
+                        <option value="last_name" {% if sort == 'last_name' %}selected{% endif %}>Last Name</option>
+                    </select>
+                </div>
+
+                <div class="claims-search-actions">
+                    <button type="submit" class="primary-btn">Search</button>
+                    <a href="{{ url_for('main.beneficiaries') }}" class="secondary-btn">Reset</a>
+                </div>
+            </div>
+        </form>
+
         <div class="beneficiaries-summary-strip">
             <div class="beneficiaries-summary-card">
-                <span class="beneficiaries-summary-label">Total Records</span>
+                <span class="beneficiaries-summary-label">Total Results</span>
                 <strong>{{ beneficiaries|length }}</strong>
             </div>
 
@@ -44,7 +81,7 @@
                     <span class="section-mini-label">Registered Members</span>
                     <h2>Beneficiary Register</h2>
                 </div>
-                <a href="{{ url_for('main.add_beneficiary') }}" class="table-action-link" data-i18n="add_new_beneficiary">
+                <a href="{{ url_for('main.add_beneficiary') }}" class="table-action-link">
                     Add New Beneficiary
                 </a>
             </div>
@@ -53,34 +90,35 @@
                 <table class="data-table premium-data-table">
                     <thead>
                         <tr>
-                            <th data-i18n="th_national_id">National ID</th>
-                            <th data-i18n="th_first_name">First Name</th>
-                            <th data-i18n="th_last_name">Last Name</th>
-                            <th data-i18n="th_dob">Date of Birth</th>
-                            <th data-i18n="th_gender">Gender</th>
-                            <th data-i18n="th_nationality">Nationality</th>
-                            <th data-i18n="th_mobile">Mobile</th>
-                            <th data-i18n="th_email">Email</th>
+                            <th>National ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Date of Birth</th>
+                            <th>Gender</th>
+                            <th>Nationality</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        {% for beneficiary in beneficiaries %}
+                        {% for b in beneficiaries %}
                         <tr>
-                            <td>{{ beneficiary.national_id }}</td>
-                            <td>{{ beneficiary.first_name }}</td>
-                            <td>{{ beneficiary.last_name }}</td>
-                            <td>{{ beneficiary.date_of_birth }}</td>
-                            <td>{{ beneficiary.gender }}</td>
-                            <td>{{ beneficiary.nationality }}</td>
-                            <td>{{ beneficiary.mobile_number }}</td>
-                            <td>{{ beneficiary.email_address }}</td>
+                            <td>{{ b.national_id }}</td>
+                            <td>{{ b.first_name }}</td>
+                            <td>{{ b.last_name }}</td>
+                            <td>{{ b.date_of_birth }}</td>
+                            <td>{{ b.gender }}</td>
+                            <td>{{ b.nationality }}</td>
+                            <td>{{ b.mobile_number }}</td>
+                            <td>{{ b.email_address }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
 
                 {% if not beneficiaries %}
-                    <p class="empty-text" data-i18n="no_beneficiaries">No beneficiaries added yet.</p>
+                    <p class="empty-text">No results found.</p>
                 {% endif %}
             </div>
         </div>

@@ -46,6 +46,7 @@
                 <a href="{{ url_for('main.beneficiaries') }}" class="nav-link" data-i18n="nav_beneficiaries">Beneficiaries</a>
                 <a href="{{ url_for('main.claims') }}" class="nav-link" data-i18n="nav_claims">Claims</a>
                 <a href="{{ url_for('main.ai_dashboard') }}" class="nav-link">AI Insights</a>
+                
                 <a href="{{ url_for('auth.logout') }}" class="nav-link nav-link-outline" data-i18n="nav_logout">Logout</a>
             </nav>
 
@@ -81,9 +82,9 @@
     </main>
 
     <!-- CHATBOT BUTTON -->
-    <button class="chatbot-toggle" id="chatbotToggle" type="button" aria-label="Open AI assistant">
-        💬
-    </button>
+   <a href="{{ url_for('main.ai_chat') }}" class="chatbot-toggle" aria-label="Open AI assistant">
+    💬
+</a>
 
     <!-- CHATBOT BOX -->
     <div class="chatbot-container" id="chatbotBox" aria-hidden="true">
@@ -116,6 +117,37 @@
 
     <script src="{{ url_for('static', filename='js/lang.js') }}"></script>
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+
+    <script>
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        const micBtn = document.getElementById("chatMicBtn");
+        const chatInput = document.getElementById("chatInput");
+
+        if (micBtn && chatInput) {
+            micBtn.addEventListener("click", function () {
+                recognition.start();
+            });
+
+            recognition.onresult = function (event) {
+                const text = event.results[0][0].transcript;
+                chatInput.value = text;
+            };
+
+            recognition.onerror = function (event) {
+                console.log("Voice recognition error:", event.error);
+            };
+        }
+    } else {
+        console.log("Speech recognition not supported in this browser.");
+    }
+</script>
 
     <script>
         window.addEventListener("load", function () {

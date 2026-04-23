@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="ai-chat-page">
+    <div class="ai-chat-wrapper">
+
+        <div class="ai-chat-hero">
+            <span class="ai-chat-kicker">AI ASSISTANT</span>
+            <h1>NHDC Smart Assistant</h1>
+            <p>
+                Ask about claims, beneficiaries, AI insights, and platform summaries
+                in one dedicated workspace.
+            </p>
+        </div>
+
+        <div class="ai-chat-main-card">
+            <div class="ai-chat-header-bar">
+                <div>
+                    <h2>Conversation</h2>
+                    <span>Real-time assistant for NHDC</span>
+                </div>
+            </div>
+
+            <div id="fullChatMessages" class="ai-chat-messages">
+                <div class="chatbot-message bot">
+                    Hello! I am your NHDC AI assistant 👋<br>
+                    You can ask me things like:
+                    <br><br>
+                    • How many claims do we have?
+                    <br>
+                    • How many beneficiaries are in the system?
+                    <br>
+                    • Give me an AI summary
+                </div>
+            </div>
+
+            <div class="ai-chat-input-bar">
+                <input
+                    type="text"
+                    id="fullChatInput"
+                    placeholder="Type your message here..."
+                    autocomplete="off"
+                >
+                <button type="button" id="fullChatMicBtn">🎤</button>
+                <button type="button" id="fullChatSpeakBtn">🔊</button>
+                <button type="button" id="fullChatSendBtn" class="primary-btn">Send</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("fullChatInput");
+    const sendBtn = document.getElementById("fullChatSendBtn");
+    const micBtn = document.getElementById("fullChatMicBtn");
+    const speakBtn = document.getElementById("fullChatSpeakBtn");
+    const messages = document.getElementById("fullChatMessages");
+
+    let lastBotReply = "";
+
+    function appendMessage(text, type) {
+        const div = document.createElement("div");
+        div.className = "chatbot-message " + type;
+        div.innerHTML = text.replace(/\n/g, "<br>");
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function sendMessage() {
+        const msg = input.value.trim();
+        if (!msg) return;
+
+        appendMessage(msg, "user");
+        input.value = "";
+
+        fetch("/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: msg })
+        })
+        .then(response => response.json())
+        .then(data => {
+            lastBotReply = data.response || "No response.";
+            appendMessage(lastBotReply, "bot");
+        })
+        .catch(error => {
+            appendMessage("Error connecting to AI assistant.", "bot");
+            console.log(error);
+        });
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+
+    input.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
+    });
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        micBtn.addEventListener("click", function () {
+            recognition.start();
+        });
+
+        recognition.onresult = function (event) {
+            input.value = event.results[0][0].transcript;
+        };
+
+        recognition.onerror = function (event) {
+            console.log("Voice recognition error:", event.error);
+        };
+    } else {
+        micBtn.style.display = "none";
+    }
+
+    speakBtn.addEventListener("click", function () {
+        if (!lastBotReply) return;
+
+        const utterance = new SpeechSynthesisUtterance(lastBotReply);
+        utterance.lang = "en-US";
+        speechSynthesis.speak(utterance);
+    });
+});
+</script>
+{% endblock %}

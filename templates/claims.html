@@ -18,12 +18,15 @@
                 <a href="{{ url_for('main.add_claim') }}" class="primary-btn" data-i18n="add_new_claim">
                     Add New Claim
                 </a>
+                <a href="{{ url_for('main.export_claims') }}" class="secondary-btn">
+                    Export CSV
+                </a>
             </div>
         </div>
 
         <div class="claims-summary-strip">
             <div class="claims-summary-card">
-                <span class="claims-summary-label">Total Records</span>
+                <span class="claims-summary-label">Total Results</span>
                 <strong>{{ claims|length }}</strong>
             </div>
 
@@ -33,7 +36,7 @@
             </div>
 
             <div class="claims-summary-card">
-                <span class="claims-summary-label">Review Layer</span>
+                <span class="claims-summary-label">AI Review</span>
                 <strong>Enabled</strong>
             </div>
         </div>
@@ -49,6 +52,46 @@
                 </a>
             </div>
 
+            <form method="GET" action="{{ url_for('main.claims') }}" class="claims-search-bar">
+                <div class="claims-search-grid">
+                    <div class="claims-search-field">
+                        <label>Keyword Search</label>
+                        <input
+                            type="text"
+                            name="q"
+                            value="{{ q }}"
+                            placeholder="Search by claim number, beneficiary ID, or diagnosis code"
+                        >
+                    </div>
+
+                    <div class="claims-search-field">
+                        <label>Status Filter</label>
+                        <select name="status">
+                            <option value="">All Statuses</option>
+                            <option value="Submitted" {% if status == 'Submitted' %}selected{% endif %}>Submitted</option>
+                            <option value="Approved" {% if status == 'Approved' %}selected{% endif %}>Approved</option>
+                            <option value="Denied" {% if status == 'Denied' %}selected{% endif %}>Denied</option>
+                            <option value="Pending" {% if status == 'Pending' %}selected{% endif %}>Pending</option>
+                        </select>
+                    </div>
+
+                    <div class="claims-search-field">
+                        <label>Sort By</label>
+                        <select name="sort">
+                            <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Newest</option>
+                            <option value="oldest" {% if sort == 'oldest' %}selected{% endif %}>Oldest</option>
+                            <option value="gross_high" {% if sort == 'gross_high' %}selected{% endif %}>Highest Gross</option>
+                            <option value="gross_low" {% if sort == 'gross_low' %}selected{% endif %}>Lowest Gross</option>
+                        </select>
+                    </div>
+
+                    <div class="claims-search-actions">
+                        <button type="submit" class="primary-btn">Search</button>
+                        <a href="{{ url_for('main.claims') }}" class="secondary-btn">Reset</a>
+                    </div>
+                </div>
+            </form>
+
             <div class="data-table-wrap">
                 <table class="data-table premium-data-table">
                     <thead>
@@ -61,30 +104,56 @@
                             <th data-i18n="th_patient_share">Patient Share</th>
                             <th data-i18n="th_net_amount">Net Amount</th>
                             <th data-i18n="th_status">Status</th>
+                            <th>AI Risk</th>
+                            <th>AI Score</th>
+                            <th>AI Explanation</th>
+                            <th>Recommendation</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for claim in claims %}
                         <tr>
-                            <td>{{ claim.claim_number }}</td>
-                            <td>{{ claim.beneficiary_national_id }}</td>
-                            <td>{{ claim.encounter_date }}</td>
-                            <td>{{ claim.diagnosis_code }}</td>
-                            <td>{{ claim.total_gross }}</td>
-                            <td>{{ claim.patient_share }}</td>
-                            <td>{{ claim.net_amount }}</td>
+                            <td>{{ claim["claim_number"] }}</td>
+                            <td>{{ claim["beneficiary_national_id"] }}</td>
+                            <td>{{ claim["encounter_date"] }}</td>
+                            <td>{{ claim["diagnosis_code"] }}</td>
+                            <td>{{ claim["total_gross"] }}</td>
+                            <td>{{ claim["patient_share"] }}</td>
+                            <td>{{ claim["net_amount"] }}</td>
                             <td>
-                                <span class="status-pill {% if claim.status == 'Approved' %}status-approved{% elif claim.status == 'Denied' %}status-denied{% elif claim.status == 'Pending' %}status-pending{% else %}status-submitted{% endif %}">
-                                    {{ claim.status }}
+                                <span class="status-pill {% if claim['status'] == 'Approved' %}status-approved{% elif claim['status'] == 'Denied' %}status-denied{% elif claim['status'] == 'Pending' %}status-pending{% else %}status-submitted{% endif %}">
+                                    {{ claim["status"] }}
                                 </span>
                             </td>
+                            <td>
+                                <span class="status-pill {% if claim['risk'] == 'High' %}status-denied{% elif claim['risk'] == 'Medium' %}status-pending{% else %}status-approved{% endif %}">
+                                    {{ claim["risk"] }}
+                                </span>
+                            </td>
+                            <td>{{ claim["score"] }}%</td>
+                            <td>{{ claim["explanation"] }}</td>
+                            <td>{{ claim["recommendation"] }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
 
                 {% if not claims %}
-                    <p class="empty-text" data-i18n="no_claims">No claims added yet.</p>
+                    <p class="empty-text" data-i18n="no_claims">No claims found.</p>
+                {% endif %}
+            </div>
+
+            <div class="pagination-bar">
+                {% if pagination.has_prev %}
+                    <a class="secondary-btn" href="{{ url_for('main.claims', page=pagination.prev_num, q=q, status=status, sort=sort) }}">Previous</a>
+                {% endif %}
+
+                <span class="pagination-info">
+                    Page {{ pagination.page }} of {{ pagination.pages if pagination.pages > 0 else 1 }}
+                </span>
+
+                {% if pagination.has_next %}
+                    <a class="secondary-btn" href="{{ url_for('main.claims', page=pagination.next_num, q=q, status=status, sort=sort) }}">Next</a>
                 {% endif %}
             </div>
         </div>

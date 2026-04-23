@@ -4,6 +4,13 @@
 <section class="ai-dashboard-page">
     <div class="ai-dashboard-shell">
 
+        <div
+            id="chartData"
+            data-high="{{ high | default(0) }}"
+            data-medium="{{ medium | default(0) }}"
+            data-low="{{ low | default(0) }}">
+        </div>
+
         <section class="ai-dashboard-top">
             <div class="ai-dashboard-hero-card">
                 <span class="ai-dashboard-kicker">AI INSIGHTS CENTER</span>
@@ -257,22 +264,29 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const highRisk = Number({{ high|tojson }});
-    const mediumRisk = Number({{ medium|tojson }});
-    const lowRisk = Number({{ low|tojson }});
+    const chartData = document.getElementById("chartData");
+    if (!chartData || typeof Chart === "undefined") {
+        return;
+    }
 
-    const commonColors = ["#d92d20", "#dc6803", "#16a34a"];
+    const highRisk = Number(chartData.dataset.high || 0);
+    const mediumRisk = Number(chartData.dataset.medium || 0);
+    const lowRisk = Number(chartData.dataset.low || 0);
+
+    const labels = ["High Risk", "Medium Risk", "Low Risk"];
+    const values = [highRisk, mediumRisk, lowRisk];
+    const colors = ["#d92d20", "#dc6803", "#16a34a"];
 
     const barCanvas = document.getElementById("riskBarChart");
     if (barCanvas) {
         new Chart(barCanvas, {
             type: "bar",
             data: {
-                labels: ["High Risk", "Medium Risk", "Low Risk"],
+                labels: labels,
                 datasets: [{
                     label: "Claims",
-                    data: [highRisk, mediumRisk, lowRisk],
-                    backgroundColor: commonColors,
+                    data: values,
+                    backgroundColor: colors,
                     borderRadius: 12
                 }]
             },
@@ -280,16 +294,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: false }
+                    legend: {
+                        display: false
+                    }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
-                        ticks: { precision: 0 },
-                        grid: { color: "#eef3f6" }
+                        ticks: {
+                            precision: 0
+                        },
+                        grid: {
+                            color: "#eef3f6"
+                        }
                     },
                     x: {
-                        grid: { display: false }
+                        grid: {
+                            display: false
+                        }
                     }
                 }
             }
@@ -301,10 +323,10 @@ document.addEventListener("DOMContentLoaded", function () {
         new Chart(doughnutCanvas, {
             type: "doughnut",
             data: {
-                labels: ["High Risk", "Medium Risk", "Low Risk"],
+                labels: labels,
                 datasets: [{
-                    data: [highRisk, mediumRisk, lowRisk],
-                    backgroundColor: commonColors,
+                    data: values,
+                    backgroundColor: colors,
                     borderWidth: 0
                 }]
             },
@@ -313,7 +335,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 maintainAspectRatio: false,
                 cutout: "68%",
                 plugins: {
-                    legend: { position: "bottom" }
+                    legend: {
+                        position: "bottom"
+                    }
                 }
             }
         });
@@ -324,10 +348,10 @@ document.addEventListener("DOMContentLoaded", function () {
         new Chart(statusCanvas, {
             type: "doughnut",
             data: {
-                labels: ["High Risk", "Medium Risk", "Low Risk"],
+                labels: labels,
                 datasets: [{
-                    data: [highRisk, mediumRisk, lowRisk],
-                    backgroundColor: commonColors,
+                    data: values,
+                    backgroundColor: colors,
                     borderWidth: 0
                 }]
             },
@@ -336,7 +360,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 maintainAspectRatio: false,
                 cutout: "70%",
                 plugins: {
-                    legend: { display: false }
+                    legend: {
+                        display: false
+                    }
                 }
             }
         });
